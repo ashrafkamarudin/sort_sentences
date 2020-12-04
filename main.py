@@ -2,19 +2,15 @@
 # Todo
 # [x] Read sentences from "System Requirement MODEL.docx"
 # [x] Read variable from "Variable Model.xlsx"
-#    [ ] get sentences in structures like 
-# [ ] Sort these sentences into 2 file based on variables in file "Variable Model.xlsx"
+#    [x] get sentences in structures like 
+# [x] Sort these sentences into 2 file based on variables in file "Variable Model.xlsx"
 
 from pprint import pprint
 import helper
 import xlrd
 from docx2python import docx2python
-
-
-sentence_loc = "System Requirement MODEL.docx"
-variable_loc = "Variable Model.xlsx"
-
-document = docx2python("System Requirement MODEL.docx")
+import docx
+import config
 
 def extractVariableFromSheet(columns, sheet):
     dict = {}
@@ -26,18 +22,24 @@ def extractVariableFromSheet(columns, sheet):
     return dict
 
 def seperateSentenceBasedOnVariable(sentences, variables):
-    # dict = {}
-    for sentence in sentences:
-        print(sentence)
-        break
-        pprint(helper.inDict(needle=sentence, haystack=variables))
-    return
+    data = { "in": [], "not": [] }
 
-sheet = xlrd.open_workbook(variable_loc).sheet_by_index(0)
+    for sentence in sentences:
+        if helper.isVariableInSentence(needle=sentence, haystack=variables):
+            data["in"].append(sentence)
+        else:
+            data["not"].append(sentence)
+    return data
+
+# variables sheet
+sheet = xlrd.open_workbook(config.variables_path).sheet_by_index(0)
 
 title = helper.extractColumnFromSheet(row=1, sheet=sheet)
 variables = extractVariableFromSheet(columns=title, sheet=sheet)
 
-seperateSentenceBasedOnVariable(sentences=document.body, variables= variables)
+# docx
+document = docx2python(config.document_path)
+data = seperateSentenceBasedOnVariable(sentences=document.body[0][0][0], variables= variables)
 
-# pprint(variables)
+helper.writeToDocx(toWrite=data["in"], doc_path= config.output["exist"])
+helper.writeToDocx(toWrite=data["not"], doc_path= config.output["not_exist"])

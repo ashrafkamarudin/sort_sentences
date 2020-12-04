@@ -1,3 +1,5 @@
+import docx
+
 def extractColumnFromSheet (row, sheet):
     col_dict = {}
     for i in range(sheet.ncols):
@@ -17,13 +19,22 @@ def extractRowFromSheet (column, sheet):
         list.append(sheet.cell_value(i, column))
     return list
 
-def inDict (needle, haystack):
+def isVariableInSentence (needle, haystack):
     found = False
 
     for key in haystack:
-        if found: continue
-        if needle in haystack[key]:
-            print(needle)
-            found = True
-    
+        if found: continue # skip
+        for variable in haystack[key]:
+            if found: continue # skip
+            if variable in needle:
+                found = True
+
     return found
+
+def writeToDocx (toWrite, doc_path):
+    doc = docx.Document()
+
+    for sentence in toWrite:
+        doc.add_paragraph(sentence)
+
+    doc.save(doc_path)
