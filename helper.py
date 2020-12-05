@@ -1,5 +1,7 @@
 import docx
 
+alhpabets = "abcdefghijklmnopqrstuvwxyz"
+
 def extractColumnFromSheet (row, sheet):
     col_dict = {}
     for i in range(sheet.ncols):
@@ -38,3 +40,27 @@ def writeToDocx (toWrite, doc_path):
         doc.add_paragraph(sentence)
 
     doc.save(doc_path)
+
+def setListLowerBound (list, lowerBound):
+    popidx = 0
+    while popidx < (lowerBound - 1):   
+        list.pop(popidx)
+        popidx+=1
+
+    return list
+
+def reformatToNumberedList (list):
+    sidx = 0
+    sentences = []
+    for index, sentence in enumerate(list):
+        if sentence[1] not in alhpabets:
+            sentences.append(sentence)
+            sidx+=1
+            continue
+
+        for index, value in enumerate(alhpabets):
+            if f"\t{value})" in sentence:
+                sentence = sentence.replace(f"\t{value})", f"\t{sidx}.{index+1})")
+                sentences.append(sentence)
+
+    return sentences

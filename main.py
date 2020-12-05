@@ -31,15 +31,23 @@ def seperateSentenceBasedOnVariable(sentences, variables):
             data["not"].append(sentence)
     return data
 
-# variables sheet
-sheet = xlrd.open_workbook(config.variables_path).sheet_by_index(0)
+# Step 1: Load required files
+sheet = xlrd.open_workbook(config.file["sheet"]["path"]).sheet_by_index(0) # variables sheet
+document = docx2python(config.file["docx"]["path"]) # docx
 
+# step 2: Extract data from loaded files (sheet)
 title = helper.extractColumnFromSheet(row=1, sheet=sheet)
 variables = extractVariableFromSheet(columns=title, sheet=sheet)
 
-# docx
-document = docx2python(config.document_path)
-data = seperateSentenceBasedOnVariable(sentences=document.body[0][0][0], variables= variables)
+# Step 3: Reform Loaded List (docx)
+newList = helper.reformatToNumberedList(list= helper.setListLowerBound(
+    list= document.body[0][0][0], lowerBound = config.file["docx"]["start_from_row"])
+)
 
+# Step 4: Perfrom seperation
+data = seperateSentenceBasedOnVariable(sentences=newList, variables= variables)
+
+# Step 5: Print Output into docx
 helper.writeToDocx(toWrite=data["in"], doc_path= config.output["exist"])
 helper.writeToDocx(toWrite=data["not"], doc_path= config.output["not_exist"])
+
