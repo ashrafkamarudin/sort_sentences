@@ -49,6 +49,12 @@ def setListLowerBound (list, lowerBound):
 
     return list
 
+def removeStopWord (stopWordList, sentence):
+    for word in stopWordList:
+        sentence = sentence.replace(f' {word} ', ' ')
+
+    return sentence
+
 def reformatToNumberedList (list):
     sidx = 0
     sentences = []

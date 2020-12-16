@@ -25,7 +25,8 @@ def seperateSentenceBasedOnVariable(sentences, variables):
     data = { "in": [], "not": [] }
 
     for sentence in sentences:
-        if helper.isVariableInSentence(needle=sentence, haystack=variables):
+        new_sentence = helper.removeStopWord(stopWordList=config.stopWords,sentence=sentence)
+        if helper.isVariableInSentence(needle=new_sentence, haystack=variables):
             data["in"].append(sentence)
         else:
             data["not"].append(sentence)
@@ -50,4 +51,3 @@ data = seperateSentenceBasedOnVariable(sentences=newList, variables= variables)
 # Step 5: Print Output into docx
 helper.writeToDocx(toWrite=data["in"], doc_path= config.output["exist"])
 helper.writeToDocx(toWrite=data["not"], doc_path= config.output["not_exist"])
-
