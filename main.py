@@ -5,7 +5,6 @@
 #    [x] get sentences in structures like 
 # [x] Sort these sentences into 2 file based on variables in file "Variable Model.xlsx"
 
-from pprint import pprint
 import helper
 import xlrd
 from docx2python import docx2python
