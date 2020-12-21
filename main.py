@@ -8,7 +8,6 @@
 import helper
 import xlrd
 from docx2python import docx2python
-import docx
 import config
 
 def extractVariableFromSheet(columns, sheet):
