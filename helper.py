@@ -28,7 +28,7 @@ def isVariableInSentence (needle, haystack):
         if found: continue # skip
         for variable in haystack[key]:
             if found: continue # skip
-            if variable in needle:
+            if variable.lower() in needle.lower():
                 found = True
 
     return found
