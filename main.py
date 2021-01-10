@@ -8,6 +8,7 @@
 import helper
 import xlrd
 from docx2python import docx2python
+import json
 import config
 
 def extractVariableFromSheet(columns, sheet):
@@ -21,14 +22,17 @@ def extractVariableFromSheet(columns, sheet):
 
 def seperateSentenceBasedOnVariable(sentences, variables):
     data = { "in": [], "not": [] }
+    count_variable = {}
 
     for sentence in sentences:
         new_sentence = helper.removeStopWord(stopWordList=config.stopWords,sentence=sentence)
-        if helper.isVariableInSentence(needle=new_sentence, haystack=variables):
+        found, count_variable = helper.isVariableInSentence(needle=new_sentence, haystack=variables, count_var=count_variable);
+        if found:
             data["in"].append(sentence)
         else:
             data["not"].append(sentence)
-    return data
+    
+    return data, count_variable
 
 # Step 1: Load required files
 sheet = xlrd.open_workbook(config.file["sheet"]["path"]).sheet_by_index(0) # variables sheet
@@ -44,8 +48,13 @@ newList = helper.reformatToNumberedList(list= helper.setListLowerBound(
 )
 
 # Step 4: Perfrom seperation
-data = seperateSentenceBasedOnVariable(sentences=newList, variables= variables)
+data, count_variable = seperateSentenceBasedOnVariable(sentences=newList, variables= variables)
+
+variable_count = []
+for key in count_variable:
+    variable_count.append(f"{key} => {count_variable[key]} ")
 
 # Step 5: Print Output into docx
 helper.writeToDocx(toWrite=data["in"], doc_path= config.output["exist"])
 helper.writeToDocx(toWrite=data["not"], doc_path= config.output["not_exist"])
+helper.writeToDocx(toWrite=variable_count, doc_path= config.output["variable_count"])

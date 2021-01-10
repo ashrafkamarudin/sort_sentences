@@ -21,17 +21,19 @@ def extractRowFromSheet (column, sheet):
         list.append(sheet.cell_value(i, column))
     return list
 
-def isVariableInSentence (needle, haystack):
+def isVariableInSentence (needle, haystack, count_var):
     found = False
 
     for key in haystack:
         if found: continue # skip
         for variable in haystack[key]:
-            if found: continue # skip
+            # if found: continue # skip
             if variable.lower() in needle.lower():
+                count_var[variable] = count_var[variable]+1 if checkKey(count_var, variable) else 1
                 found = True
 
-    return found
+    # print (count_var)
+    return found, count_var
 
 def writeToDocx (toWrite, doc_path):
     doc = docx.Document()
@@ -70,3 +72,9 @@ def reformatToNumberedList (list):
                 sentences.append(sentence)
 
     return sentences
+
+def checkKey(dict, key): 
+    if key in dict.keys(): 
+        return True
+    else: 
+        return False

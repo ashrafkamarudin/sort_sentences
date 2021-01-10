@@ -20,7 +20,8 @@ file = {
 # change right hand side only
 output = {
     "exist":"in.docx",
-    "not_exist":"not.docx"
+    "not_exist":"not.docx",
+    "variable_count":"variable_count.docx"
 }
 
 stopWords = [
