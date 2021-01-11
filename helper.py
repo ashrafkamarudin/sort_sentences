@@ -25,11 +25,11 @@ def isVariableInSentence (needle, haystack, count_var):
     found = False
 
     for key in haystack:
-        if found: continue # skip
+        # if found: continue # skip
         for variable in haystack[key]:
             # if found: continue # skip
             if variable.lower() in needle.lower():
-                count_var[variable] = count_var[variable]+1 if checkKey(count_var, variable) else 1
+                count_var[variable] = count_var[variable]+needle.lower().count(variable.lower()) if checkKey(count_var, variable) else 1
                 found = True
 
     # print (count_var)
