@@ -58,3 +58,5 @@ for key in count_variable:
 helper.writeToDocx(toWrite=data["in"], doc_path= config.output["exist"])
 helper.writeToDocx(toWrite=data["not"], doc_path= config.output["not_exist"])
 helper.writeToDocx(toWrite=variable_count, doc_path= config.output["variable_count"])
+
+# todo sort asc
