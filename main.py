@@ -50,7 +50,7 @@ newList = helper.reformatToNumberedList(list= helper.setListLowerBound(
 # Step 4: Perfrom seperation
 data, count_variable = seperateSentenceBasedOnVariable(sentences=newList, variables= variables)
 
-count_variable = dict(sorted(count_variable.items(), key=lambda item: item[1],reverse=True if config.output["variable_count"]["order"] == "ASC" else False))
+count_variable = dict(sorted(count_variable.items(), key=lambda item: item[1],reverse=True if config.output["variable_count"]["order"] == "DESC" else False))
 
 variable_count = []
 for key in count_variable:

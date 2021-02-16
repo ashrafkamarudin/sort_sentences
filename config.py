@@ -23,7 +23,7 @@ output = {
     "not_exist":"not.docx",
     "variable_count": {
         "path": "variable_count.docx",
-        "order": "ASC"
+        "order": "DESC"
     }
 }
 
