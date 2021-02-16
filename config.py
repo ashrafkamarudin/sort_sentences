@@ -21,7 +21,10 @@ file = {
 output = {
     "exist":"in.docx",
     "not_exist":"not.docx",
-    "variable_count":"variable_count.docx"
+    "variable_count": {
+        "path": "variable_count.docx",
+        "order": "ASC"
+    }
 }
 
 stopWords = [

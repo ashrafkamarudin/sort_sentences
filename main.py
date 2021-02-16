@@ -50,6 +50,8 @@ newList = helper.reformatToNumberedList(list= helper.setListLowerBound(
 # Step 4: Perfrom seperation
 data, count_variable = seperateSentenceBasedOnVariable(sentences=newList, variables= variables)
 
+count_variable = dict(sorted(count_variable.items(), key=lambda item: item[1],reverse=True if config.output["variable_count"]["order"] == "ASC" else False))
+
 variable_count = []
 for key in count_variable:
     variable_count.append(f"{key} => {count_variable[key]} ")
@@ -57,6 +59,6 @@ for key in count_variable:
 # Step 5: Print Output into docx
 helper.writeToDocx(toWrite=data["in"], doc_path= config.output["exist"])
 helper.writeToDocx(toWrite=data["not"], doc_path= config.output["not_exist"])
-helper.writeToDocx(toWrite=variable_count, doc_path= config.output["variable_count"])
+helper.writeToDocx(toWrite=variable_count, doc_path= config.output["variable_count"]["path"])
 
 # todo sort asc
