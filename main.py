@@ -4,6 +4,9 @@
 # [x] Read variable from "Variable Model.xlsx"
 #    [x] get sentences in structures like 
 # [x] Sort these sentences into 2 file based on variables in file "Variable Model.xlsx"
+# [x] Count Occurance of "variables"
+# [x] Count/List Single Word in "System Requirement MODEL.docx"
+# [x] Count/List Double Word (2 word) in "System Requirement MODEL.docx"
 
 import helper
 import xlrd
