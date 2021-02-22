@@ -7,6 +7,7 @@
 # [x] Count Occurance of "variables"
 # [ ] Count/List Single Word in "System Requirement MODEL.docx"
 # [ ] Count/List Double Word (2 word) in "System Requirement MODEL.docx"
+# [ ] Draw flow / algorithm
 
 import helper
 import xlrd
