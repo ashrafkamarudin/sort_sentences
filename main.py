@@ -30,6 +30,10 @@ def seperateSentenceBasedOnVariable(sentences, variables):
 
     for sentence in sentences:
         new_sentence = helper.removeStopWord(stopWordList=config.stopWords,sentence=sentence)
+
+        # single count
+        # doubly count
+        
         found, count_variable = helper.isVariableInSentence(needle=new_sentence, haystack=variables, count_var=count_variable);
         if found:
             data["in"].append(sentence)
