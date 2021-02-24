@@ -77,4 +77,6 @@ helper.writeToDocx(toWrite=data["not"], doc_path= config.output["not_exist"])
 helper.writeToDocx(toWrite=variable_count, doc_path= config.output["variable_count"]["path"])
 
 # WIP
+# remove special chars
+# restructure code
 helper.writeToDocx(toWrite=single_count, doc_path="single.docx")
