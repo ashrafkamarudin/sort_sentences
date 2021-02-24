@@ -78,3 +78,14 @@ def checkKey(dict, key):
         return True
     else: 
         return False
+
+def countSingleWord(haystack, output):
+    arr = haystack.split()[1:]
+
+    for v in arr:
+        if checkKey(output, v):
+            output[v]+=1
+            continue
+        output[v] = 1
+
+    return output

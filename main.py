@@ -27,11 +27,14 @@ def extractVariableFromSheet(columns, sheet):
 def seperateSentenceBasedOnVariable(sentences, variables):
     data = { "in": [], "not": [] }
     count_variable = {}
+    singleCount = {}
 
     for sentence in sentences:
         new_sentence = helper.removeStopWord(stopWordList=config.stopWords,sentence=sentence)
 
         # single count
+        singleCount = helper.countSingleWord(new_sentence, singleCount)
+
         # doubly count
         
         found, count_variable = helper.isVariableInSentence(needle=new_sentence, haystack=variables, count_var=count_variable);
@@ -40,7 +43,7 @@ def seperateSentenceBasedOnVariable(sentences, variables):
         else:
             data["not"].append(sentence)
     
-    return data, count_variable
+    return data, count_variable, singleCount
 
 # Step 1: Load required files
 sheet = xlrd.open_workbook(config.file["sheet"]["path"]).sheet_by_index(0) # variables sheet
@@ -56,7 +59,7 @@ newList = helper.reformatToNumberedList(list= helper.setListLowerBound(
 )
 
 # Step 4: Perfrom seperation
-data, count_variable = seperateSentenceBasedOnVariable(sentences=newList, variables= variables)
+data, count_variable, singleCount = seperateSentenceBasedOnVariable(sentences=newList, variables= variables)
 
 count_variable = dict(sorted(count_variable.items(), key=lambda item: item[1],reverse=True if config.output["variable_count"]["order"] == "DESC" else False))
 
@@ -64,9 +67,14 @@ variable_count = []
 for key in count_variable:
     variable_count.append(f"{key} => {count_variable[key]} ")
 
+single_count = []
+for key in singleCount:
+    single_count.append(f"{key} => {singleCount[key]} ")
+
 # Step 5: Print Output into docx
 helper.writeToDocx(toWrite=data["in"], doc_path= config.output["exist"])
 helper.writeToDocx(toWrite=data["not"], doc_path= config.output["not_exist"])
 helper.writeToDocx(toWrite=variable_count, doc_path= config.output["variable_count"]["path"])
 
-# todo sort asc
+# WIP
+helper.writeToDocx(toWrite=single_count, doc_path="single.docx")
