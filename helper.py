@@ -27,7 +27,7 @@ def extractVariableFromSheet(columns, sheet):
     dict = {}
 
     for key in columns:
-        list = helper.extractRowFromSheet(column=key, sheet=sheet)
+        list = extractRowFromSheet(column=key, sheet=sheet)
         dict[columns[key]] = list
 
     return dict
