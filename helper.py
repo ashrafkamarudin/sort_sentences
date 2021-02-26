@@ -118,3 +118,10 @@ def countDoubleWord(haystack, output):
 
 def extractWordFromString(haystack):
     return re.sub('['+string.punctuation+']', '', haystack).split()[1:]
+
+def transformDictToArrowNotationList(dict):
+    var = []
+    for key in dict:
+        var.append(f"{key} => {dict[key]} ")
+
+    return var
