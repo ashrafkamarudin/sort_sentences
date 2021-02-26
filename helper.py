@@ -23,6 +23,15 @@ def extractRowFromSheet (column, sheet):
         list.append(sheet.cell_value(i, column))
     return list
 
+def extractVariableFromSheet(columns, sheet):
+    dict = {}
+
+    for key in columns:
+        list = helper.extractRowFromSheet(column=key, sheet=sheet)
+        dict[columns[key]] = list
+
+    return dict
+
 def isVariableInSentence (needle, haystack, count_var):
     found = False
 

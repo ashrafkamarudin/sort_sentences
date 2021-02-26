@@ -15,15 +15,6 @@ from docx2python import docx2python
 import json
 import config
 
-def extractVariableFromSheet(columns, sheet):
-    dict = {}
-
-    for key in columns:
-        list = helper.extractRowFromSheet(column=key, sheet=sheet)
-        dict[columns[key]] = list
-
-    return dict
-
 def seperateSentenceBasedOnVariable(sentences, variables):
     data = { "in": [], "not": [] }
     count_variable = {}
@@ -53,14 +44,12 @@ document = docx2python(config.file["docx"]["path"]) # docx
 
 # step 2: Extract data from loaded files (sheet)
 title = helper.extractColumnFromSheet(row=1, sheet=sheet)
-variables = extractVariableFromSheet(columns=title, sheet=sheet)
-
-# Step 3: Reform Loaded List (docx)
+variables = helper.extractVariableFromSheet(columns=title, sheet=sheet)
 newList = helper.reformatToNumberedList(list= helper.setListLowerBound(
     list= document.body[0][0][0], lowerBound = config.file["docx"]["start_from_row"])
 )
 
-# Step 4: Perfrom seperation
+# Step 3: Perfrom seperation
 data, count_variable, singleCount, doubleCount = seperateSentenceBasedOnVariable(sentences=newList, variables= variables)
 
 count_variable = dict(sorted(count_variable.items(), key=lambda item: item[1],reverse=True if config.output["variable_count"]["order"] == "DESC" else False))
@@ -77,7 +66,7 @@ double_count = []
 for key in doubleCount:
     double_count.append(f"{key} => {doubleCount[key]} ")
 
-# Step 5: Print Output into docx
+# Step 4: Print Output into docx
 helper.writeToDocx(toWrite=data["in"], doc_path= config.output["exist"])
 helper.writeToDocx(toWrite=data["not"], doc_path= config.output["not_exist"])
 helper.writeToDocx(toWrite=variable_count, doc_path= config.output["variable_count"]["path"])
