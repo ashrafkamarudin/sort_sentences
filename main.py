@@ -35,8 +35,10 @@ document = helper.loadDocx(config.file["docx"]["path"]) # docx
 title = helper.extractColumnFromSheet(row=1, sheet=sheet)
 variables = helper.extractVariableFromSheet(columns=title, sheet=sheet)
 
-newList = helper.reformatToNumberedList(list= helper.setListLowerBound(
-    list= document.body[0][0][0], lowerBound = config.file["docx"]["start_from_row"])
+newList = helper.reformatToNumberedList(
+    list= helper.setListLowerBound(
+        list= document.body[0][0][0], lowerBound = config.file["docx"]["start_from_row"]
+    )
 )
 
 # Step 3: Perfrom seperation

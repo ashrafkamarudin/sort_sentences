@@ -33,30 +33,24 @@ def extractRowFromSheet (column, sheet):
 
 def extractVariableFromSheet(columns, sheet):
     dict = {}
-
     for key in columns:
         list = extractRowFromSheet(column=key, sheet=sheet)
         dict[columns[key]] = list
 
     return dict
 
-def isVariableInSentence (needle, haystack, count_var):
+def isVariableInSentence (needle, haystack, count):
     found = False
-
     for key in haystack:
-        # if found: continue # skip
         for variable in haystack[key]:
-            # if found: continue # skip
             if variable.lower() in needle.lower():
-                count_var[variable] = count_var[variable]+needle.lower().count(variable.lower()) if checkKey(count_var, variable) else 1
+                count[variable] = count[variable]+needle.lower().count(variable.lower()) if checkKey(count_var, variable) else 1
                 found = True
 
-    # print (count_var)
-    return found, count_var
+    return found, count
 
 def writeToDocx (toWrite, doc_path):
     doc = docx.Document()
-
     for sentence in toWrite:
         doc.add_paragraph(sentence)
 
@@ -93,10 +87,7 @@ def reformatToNumberedList (list):
     return sentences
 
 def checkKey(dict, key): 
-    if key in dict.keys(): 
-        return True
-    else: 
-        return False
+    return True if key in dict.keys() else False
 
 def countSingleWord(haystack, output):
     for current in extractWordFromString(haystack):
