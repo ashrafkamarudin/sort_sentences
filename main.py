@@ -22,7 +22,7 @@ def seperateSentenceBasedOnVariable(sentences, variables):
         singleCount = helper.countSingleWord(sentenceWithoutStopWord, {})
         doubleCount = helper.countDoubleWord(sentenceWithoutStopWord, {})
         
-        found, variableCount = helper.isVariableInSentence(sentenceWithoutStopWord, variables, count_var={});
+        found, variableCount = helper.isVariableInSentence(sentenceWithoutStopWord, variables, {});
         data["in"].append(sentence) if found else data["not"].append(sentence)
     
     return data, [variableCount, singleCount, doubleCount]
