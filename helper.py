@@ -1,8 +1,16 @@
 import docx
+from docx2python import docx2python
+import xlrd
 import re
 import string
 
 alhpabets = "abcdefghijklmnopqrstuvwxyz"
+
+def loadSheet(sheet):
+    return xlrd.open_workbook(sheet).sheet_by_index(0)
+
+def loadDocx(doc):
+    return docx2python(doc)
 
 def extractColumnFromSheet (row, sheet):
     col_dict = {}
