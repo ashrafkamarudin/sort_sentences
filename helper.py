@@ -91,3 +91,27 @@ def countSingleWord(haystack, output):
         output[v] = 1
 
     return output
+
+def countDoubleWord(haystack, output):
+    arr = re.sub('['+string.punctuation+']', '', haystack).split()[1:]
+    previous = ''
+
+    for current in arr:
+        if previous == '':
+            previous = current
+            continue
+
+        key = f"{previous} {current}"
+        previous = current
+
+        if checkKey(output, key):
+            output[key]+=1
+            continue
+        output[key] = 1
+        
+    return output
+
+def pairwise(iterable):
+    "s -> (s0, s1), (s2, s3), (s4, s5), ..."
+    a = iter(iterable)
+    return zip(a, a)

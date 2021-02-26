@@ -28,6 +28,7 @@ def seperateSentenceBasedOnVariable(sentences, variables):
     data = { "in": [], "not": [] }
     count_variable = {}
     singleCount = {}
+    doubleCount = {}
 
     for sentence in sentences:
         new_sentence = helper.removeStopWord(stopWordList=config.stopWords,sentence=sentence)
@@ -36,6 +37,7 @@ def seperateSentenceBasedOnVariable(sentences, variables):
         singleCount = helper.countSingleWord(new_sentence, singleCount)
 
         # doubly count
+        doubleCount = helper.countDoubleWord(new_sentence, doubleCount)
         
         found, count_variable = helper.isVariableInSentence(needle=new_sentence, haystack=variables, count_var=count_variable);
         if found:
@@ -43,7 +45,7 @@ def seperateSentenceBasedOnVariable(sentences, variables):
         else:
             data["not"].append(sentence)
     
-    return data, count_variable, singleCount
+    return data, count_variable, singleCount, doubleCount
 
 # Step 1: Load required files
 sheet = xlrd.open_workbook(config.file["sheet"]["path"]).sheet_by_index(0) # variables sheet
@@ -59,7 +61,7 @@ newList = helper.reformatToNumberedList(list= helper.setListLowerBound(
 )
 
 # Step 4: Perfrom seperation
-data, count_variable, singleCount = seperateSentenceBasedOnVariable(sentences=newList, variables= variables)
+data, count_variable, singleCount, doubleCount = seperateSentenceBasedOnVariable(sentences=newList, variables= variables)
 
 count_variable = dict(sorted(count_variable.items(), key=lambda item: item[1],reverse=True if config.output["variable_count"]["order"] == "DESC" else False))
 
@@ -71,6 +73,10 @@ single_count = []
 for key in singleCount:
     single_count.append(f"{key} => {singleCount[key]} ")
 
+double_count = []
+for key in doubleCount:
+    double_count.append(f"{key} => {doubleCount[key]} ")
+
 # Step 5: Print Output into docx
 helper.writeToDocx(toWrite=data["in"], doc_path= config.output["exist"])
 helper.writeToDocx(toWrite=data["not"], doc_path= config.output["not_exist"])
@@ -80,3 +86,4 @@ helper.writeToDocx(toWrite=variable_count, doc_path= config.output["variable_cou
 # remove special chars
 # restructure code
 helper.writeToDocx(toWrite=single_count, doc_path="single.docx")
+helper.writeToDocx(toWrite=double_count, doc_path="double.docx")
