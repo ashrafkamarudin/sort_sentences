@@ -91,21 +91,17 @@ def checkKey(dict, key):
         return False
 
 def countSingleWord(haystack, output):
-    arr = re.sub('['+string.punctuation+']', '', haystack).split()[1:]
-
-    for v in arr:
-        if checkKey(output, v):
-            output[v]+=1
+    for current in extractWordFromString(haystack):
+        if checkKey(output, current):
+            output[current]+=1
             continue
-        output[v] = 1
+        output[current] = 1
 
     return output
 
 def countDoubleWord(haystack, output):
-    arr = re.sub('['+string.punctuation+']', '', haystack).split()[1:]
     previous = ''
-
-    for current in arr:
+    for current in extractWordFromString(haystack):
         if previous == '':
             previous = current
             continue
@@ -119,3 +115,6 @@ def countDoubleWord(haystack, output):
         output[key] = 1
         
     return output
+
+def extractWordFromString(haystack):
+    return re.sub('['+string.punctuation+']', '', haystack).split()[1:]
