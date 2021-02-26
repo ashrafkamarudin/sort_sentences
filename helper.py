@@ -1,4 +1,6 @@
 import docx
+import re
+import string
 
 alhpabets = "abcdefghijklmnopqrstuvwxyz"
 
@@ -80,7 +82,7 @@ def checkKey(dict, key):
         return False
 
 def countSingleWord(haystack, output):
-    arr = haystack.split()[1:]
+    arr = re.sub('['+string.punctuation+']', '', haystack).split()[1:]
 
     for v in arr:
         if checkKey(output, v):
