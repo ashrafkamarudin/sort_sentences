@@ -7,7 +7,8 @@
 # [x] Count Occurance of "variables"
 # [x] Count/List Single Word in "System Requirement MODEL.docx"
 # [x] Count/List Double Word (2 word) in "System Requirement MODEL.docx"
-# [x] Draw flow / algorithm
+# [ ] Draw flow / algorithm
+# [ ] Update Config
 
 import helper
 import json
