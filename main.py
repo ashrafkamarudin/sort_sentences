@@ -4,6 +4,7 @@ import config
 
 def seperateSentenceBasedOnVariable(sentences, variables):
     data = { "in": [], "not": [] }
+    variableCount = {}
 
     for sentence in sentences:
         sentenceWithoutStopWord = helper.removeStopWord(stopWordList=config.stopWords,sentence=sentence)
@@ -11,7 +12,7 @@ def seperateSentenceBasedOnVariable(sentences, variables):
         singleCount = helper.countSingleWord(sentenceWithoutStopWord, {})
         doubleCount = helper.countDoubleWord(sentenceWithoutStopWord, {})
         
-        found, variableCount = helper.isVariableInSentence(sentenceWithoutStopWord, variables, {});
+        found, variableCount = helper.isVariableInSentence(sentenceWithoutStopWord, variables, variableCount);
         data["in"].append(sentence) if found else data["not"].append(sentence)
     
     return data, [variableCount, singleCount, doubleCount]
@@ -41,6 +42,8 @@ counts[0] = dict(
 variable_count = helper.transformDictToArrowNotationList(counts[0])
 single_count = helper.transformDictToArrowNotationList(counts[1])
 double_count = helper.transformDictToArrowNotationList(counts[2])
+
+print (variable_count)
 
 # Step 4: Print Output into docx
 helper.writeToDocx(toWrite=data["in"], doc_path= config.output["exist"])

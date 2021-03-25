@@ -85,7 +85,6 @@ def removeStopWord (stopWordList, sentence):
 def reformatToNumberedList (list):
     sidx = 0
     sentences = []
-    print(list)
     for index, sentence in enumerate(list):
         if sentence[1] not in alhpabets:
             sentences.append(sentence)
@@ -95,9 +94,7 @@ def reformatToNumberedList (list):
         for index, value in enumerate(alhpabets):
             if f"\t{value})" in sentence:
                 sentence = sentence.replace(f"\t{value})", f"\t{sidx}.{index+1})")
-                print(sentence)
                 sentences.append(sentence)
-    # print(sentences)
     return sentences
 #
 # Check if the given key exist in the given dictionary
