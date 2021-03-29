@@ -21,9 +21,11 @@ def seperateSentenceBasedOnVariable(sentences, variables):
 sheet = helper.loadSheet(config.file["sheet"]["path"])  # variables sheet
 document = helper.loadDocx(config.file["docx"]["path"]) # docx
 
-# step 2: Extract data from loaded files (sheet)
+# step 2`: Extract data from loaded files (sheet)
 title = helper.extractColumnFromSheet(row=1, sheet=sheet)
 variables = helper.extractVariableFromSheet(columns=title, sheet=sheet)
+
+print(variables)
 
 newList = helper.reformatToNumberedList(
     list= helper.setListLowerBound(
